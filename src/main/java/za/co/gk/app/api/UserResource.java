@@ -1,9 +1,6 @@
 package za.co.gk.app.api;
 
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import za.co.gk.app.model.User;
 import za.co.gk.app.service.user.UserService;
 
@@ -21,11 +18,17 @@ public class UserResource {
     UserService userService;
 
     @RequestMapping(value = "/user/add",method = RequestMethod.PUT)
-    public void addUser(@RequestBody(required = true) User user){
+    public void addUser(@ModelAttribute User user){
+        userService.addUser(user);
+    }
+
+    @RequestMapping(value = "/user/add",method = RequestMethod.POST)
+    public void addUserPost(@ModelAttribute User user){
         userService.addUser(user);
     }
 
     @RequestMapping(value = "/users",method = RequestMethod.GET)
+    @ResponseBody
     public List<User> getUsers(){
         return userService.getUsers();
     }
@@ -33,5 +36,10 @@ public class UserResource {
     @RequestMapping(value = "/user/login",method = RequestMethod.POST)
     public void getLoginToken(User user){
         userService.generateLoginToken(user);
+    }
+
+    @RequestMapping(value = "/user/logout/{id}",method = RequestMethod.POST)
+    public void destroyLoginToken(@PathVariable("id") Long id,@RequestBody(required = true)String token){
+//        userService.detroyLoginToken();
     }
 }

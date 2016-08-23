@@ -11,10 +11,5 @@ import java.util.List;
 public interface UserDao extends CrudRepository<User,Long>{
 
     List<User> findAll();
-//    void save(User user);
-//    void update(User user);
-//    void delete (User user);
-//    User findByUserId(Long id);
-//    List<User> findAll();
 
 }
